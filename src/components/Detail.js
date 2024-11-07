@@ -49,7 +49,7 @@ const Detail = (props) => {
           </AddList>
           <GroupWatch>
             <div>
-              <img src="/images/group-icon.png" alt="" />
+              <img src ={`${process.env.PUBLIC_URL}/group-icon.png`}  alt="" />
             </div>
           </GroupWatch>
         </Controls>
