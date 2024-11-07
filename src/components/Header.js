@@ -57,36 +57,37 @@ const Header = (props) =>{
     return(  
     <Nav>
         <Logo>
-            <img src="/images/logo.svg" alt="Disney" />
+            <img src={`${process.env.PUBLIC_URL}/images/logo.svg`} alt="Brand" />
         </Logo>
         {!userName ? <Login onClick={handleAuth}>Login</Login> : 
         <>
         <NavMenu>
-            <a href="/home">
-                <img src="/images/home-icon.svg" alt="HOME" />
-                <span>HOME</span>
-            </a>
-            <a href="/search">
-                <img src="/images/search-icon.svg" alt="HOME" />
-                <span>SEARCH</span>
-            </a>
-            <a href="/watchlist">
-                <img src="/images/watchlist-icon.svg" alt="HOME" />
-                <span>WATCHLIST</span>
-            </a>
-            <a href="/originals">
-                <img src="/images/original-icon.svg" alt="HOME" />
-                <span>ORIGINALS</span>
-            </a>
-            <a href="/movies">
-                <img src="/images/movie-icon.svg" alt="HOME" />
-                <span>MOVIES</span>
-            </a>
-            <a href="/series">
-                <img src="/images/series-icon.svg" alt="HOME" />
-                <span>SERIES</span>
-            </a>
-        </NavMenu>
+    <a href="/home">
+        <img src={`${process.env.PUBLIC_URL}/images/home-icon.svg`} alt="HOME" />
+        <span>HOME</span>
+    </a>
+    <a href="/search">
+        <img src={`${process.env.PUBLIC_URL}/images/search-icon.svg`} alt="SEARCH" />
+        <span>SEARCH</span>
+    </a>
+    <a href="/watchlist">
+        <img src={`${process.env.PUBLIC_URL}/images/watchlist-icon.svg`} alt="WATCHLIST" />
+        <span>WATCHLIST</span>
+    </a>
+    <a href="/originals">
+        <img src={`${process.env.PUBLIC_URL}/images/original-icon.svg`} alt="ORIGINALS" />
+        <span>ORIGINALS</span>
+    </a>
+    <a href="/movies">
+        <img src={`${process.env.PUBLIC_URL}/images/movie-icon.svg`} alt="MOVIES" />
+        <span>MOVIES</span>
+    </a>
+    <a href="/series">
+        <img src={`${process.env.PUBLIC_URL}/images/series-icon.svg`} alt="SERIES" />
+        <span>SERIES</span>
+    </a>
+</NavMenu>
+
         <SignOut>
             <UserImage src={userPhoto} alt={userName} />
             <DropDown>

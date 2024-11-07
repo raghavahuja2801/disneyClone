@@ -1,18 +1,21 @@
 import styled from "styled-components";
 
-const Login = (props) =>{
+const Login = (props) => {
     return (
-    <Container>
-        <Content>
-            <CTA>
-                <CTALogoOne src="/images/cta-logo-one.svg" />
-                <SignUp href="/home">GET ALL THERE</SignUp>
-                <Description>Get Premier Access to Raya and the last dragon for an additional fee with Disney+ subscription. As of 03/26/31. the price of Disney+ and The Disney Bundle will increate by 1$.</Description>
-                <CTALogoTwo src="/images/cta-logo-two.png" />
-            </CTA>
-            <BgImage />
-        </Content>
-    </Container>
+        <Container>
+            <Content>
+                <CTA>
+                    <CTALogoOne src={`${process.env.PUBLIC_URL}/images/cta-logo-one.svg`} />
+                    <SignUp href="/home">GET ALL THERE</SignUp>
+                    <Description>
+                        Get Premier Access to Raya and the last dragon for an additional fee with Disney+ subscription. As of 03/26/31, the price of Disney+ and The Disney Bundle will increase by $1.
+                    </Description>
+                    <CTALogoTwo src={`${process.env.PUBLIC_URL}/images/cta-logo-two.png`} />
+
+                </CTA>
+                <BgImage />
+            </Content>
+        </Container>
     )
 };
 
