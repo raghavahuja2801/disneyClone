@@ -1,30 +1,26 @@
 import { useEffect } from "react";
-import { auth , provider } from "../firebase";
-import {useDispatch, useSelector} from 'react-redux';
-import {useHistory} from 'react-router-dom';
-import { selectUserName, selectUserEmail,selectUserPhoto, setUserLoginDetails, setSignOutState } from "../features/user/userSlice";
-import styled from "styled-components"; 
-import { signInWithPopup , signOut} from "firebase/auth";
+import { auth, provider } from "../firebase";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';  // Updated import
+import { selectUserName, selectUserEmail, selectUserPhoto, setUserLoginDetails, setSignOutState } from "../features/user/userSlice";
+import styled from "styled-components";
+import { signInWithPopup, signOut } from "firebase/auth";
 
-
-
-const Header = (props) =>{
-
-
+const Header = (props) => {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();  // Updated hook
     const userName = useSelector(selectUserName);
     const userEmail = useSelector(selectUserEmail);
     const userPhoto = useSelector(selectUserPhoto);
 
-    useEffect(()=>{
-        auth.onAuthStateChanged(async(user)=>{
-            if(user){
+    useEffect(() => {
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
                 setUser(user);
-                history.push('/home');
+                navigate('/home');  // Updated history.push to navigate
             }
         })
-    }, [userName]);
+    }, [userName, navigate]);  // Added navigate to dependencies
 
     const setUser = (user) => {
         dispatch(
@@ -32,71 +28,68 @@ const Header = (props) =>{
                 name: user.displayName,
                 email: user.email,
                 photo: user.photoURL,
-
             })
         )
     };
 
     const handleAuth = () => {
-        if (!userName){
-        signInWithPopup(auth, provider).then((result) => {
-            setUser(result.user);
-        }).catch((error) => {
-            alert(error.message)
-        });
+        if (!userName) {
+            signInWithPopup(auth, provider).then((result) => {
+                setUser(result.user);
+            }).catch((error) => {
+                alert(error.message);
+            });
+        } else if (userName) {
+            signOut(auth).then(() => {
+                dispatch(setSignOutState());
+                navigate("/");  // Updated history.push to navigate
+            }).catch((err) => alert(err.message));
+        }
+    };
 
-    } else if (userName) {
-        signOut(auth).then(()=>{
-            dispatch(setSignOutState());
-            history.push("/");
-        }).catch((err)=> alert(err.message));
-    }
-};
+    return (
+        <Nav>
+            <Logo>
+                <img src={`${process.env.PUBLIC_URL}/images/logo.svg`} alt="Brand" />
+            </Logo>
+            {!userName ? <Login onClick={handleAuth}>Login</Login> :
+                <>
+                    <NavMenu>
+                        <a href="/disneyclone/home">
+                            <img src={`${process.env.PUBLIC_URL}/images/home-icon.svg`} alt="HOME" />
+                            <span>HOME</span>
+                        </a>
+                        <a href="/disneyclone/search">
+                            <img src={`${process.env.PUBLIC_URL}/images/search-icon.svg`} alt="SEARCH" />
+                            <span>SEARCH</span>
+                        </a>
+                        <a href="/disneyclone/watchlist">
+                            <img src={`${process.env.PUBLIC_URL}/images/watchlist-icon.svg`} alt="WATCHLIST" />
+                            <span>WATCHLIST</span>
+                        </a>
+                        <a href="/disneyclone/originals">
+                            <img src={`${process.env.PUBLIC_URL}/images/original-icon.svg`} alt="ORIGINALS" />
+                            <span>ORIGINALS</span>
+                        </a>
+                        <a href="/disneyclone/movies">
+                            <img src={`${process.env.PUBLIC_URL}/images/movie-icon.svg`} alt="MOVIES" />
+                            <span>MOVIES</span>
+                        </a>
+                        <a href="/disneyclone/series">
+                            <img src={`${process.env.PUBLIC_URL}/images/series-icon.svg`} alt="SERIES" />
+                            <span>SERIES</span>
+                        </a>
+                    </NavMenu>
 
-
-    return(  
-    <Nav>
-        <Logo>
-            <img src={`${process.env.PUBLIC_URL}/images/logo.svg`} alt="Brand" />
-        </Logo>
-        {!userName ? <Login onClick={handleAuth}>Login</Login> : 
-        <>
-        <NavMenu>
-    <a href="/home">
-        <img src={`${process.env.PUBLIC_URL}/images/home-icon.svg`} alt="HOME" />
-        <span>HOME</span>
-    </a>
-    <a href="/search">
-        <img src={`${process.env.PUBLIC_URL}/images/search-icon.svg`} alt="SEARCH" />
-        <span>SEARCH</span>
-    </a>
-    <a href="/watchlist">
-        <img src={`${process.env.PUBLIC_URL}/images/watchlist-icon.svg`} alt="WATCHLIST" />
-        <span>WATCHLIST</span>
-    </a>
-    <a href="/originals">
-        <img src={`${process.env.PUBLIC_URL}/images/original-icon.svg`} alt="ORIGINALS" />
-        <span>ORIGINALS</span>
-    </a>
-    <a href="/movies">
-        <img src={`${process.env.PUBLIC_URL}/images/movie-icon.svg`} alt="MOVIES" />
-        <span>MOVIES</span>
-    </a>
-    <a href="/series">
-        <img src={`${process.env.PUBLIC_URL}/images/series-icon.svg`} alt="SERIES" />
-        <span>SERIES</span>
-    </a>
-</NavMenu>
-
-        <SignOut>
-            <UserImage src={userPhoto} alt={userName} />
-            <DropDown>
-                <span onClick={handleAuth}>SignOut</span>
-            </DropDown>
-        </SignOut>
+                    <SignOut>
+                        <UserImage src={userPhoto} alt={userName} />
+                        <DropDown>
+                            <span onClick={handleAuth}>SignOut</span>
+                        </DropDown>
+                    </SignOut>
                 </>
-}
-    </Nav>
+            }
+        </Nav>
     )
 }
 
@@ -107,33 +100,31 @@ const Nav = styled.nav`
     right: 0;
     height: 70px !important;
     display: flex;
-    justify-contact: space-between;
+    justify-content: space-between;
     align-items: center;
     padding: 0 36px;
     background-color: #090b13;
     letter-spacing: 16px;
     z-index: 3;
-
 `;
 
 const Logo = styled.a`
-    padding: 0 ;
+    padding: 0;
     width: 80px;
     margin-top: 4px;
     max-height: 80px;
     font-size: 0px;
-    display: inline-block:
+    display: inline-block;
     img {
         display: block;
         width: 100px;
     }
-
 `;
 
 const NavMenu = styled.div`
-    allign-items: center;
+    align-items: center;
     display: flex;
-    flex:flow:row nowrap;
+    flex-flow: row nowrap;
     height: 100%;
     justify-content: flex-end;
     margin: 0px;
@@ -149,57 +140,50 @@ const NavMenu = styled.div`
 
         img {
             height: 20px;
-            min-width: 20p
+            min-width: 20px;
             z-index: auto;
             width: 20px;
         }
-        
-    span {
-        color: rgb(249,249,249);
-        font-sizing: 13px; 
-        letter-spacing: 1.42px;
-        line-height: 1.08;
-        padding: 2px 3px;
-        white-space: nowrap;
-        position: relative;
 
-        &:before {
-            background-color: rgb(249,249,249);
-            border-radius: 0px 0px 4px 4px;
-            bottom: -6px;
-            content: "";
-            left: 0px; 
-            height: 2px;
-            opacity: 0;
-            position: absolute;
-            right: 0px;
-            transform-origin: left center;
-            transform: scaleX(0);
-            transition: all 250ms cubic-bezier(0.25,0.46,0.45,0.94);
-            visiblity: hidden;
-            width: auto;
+        span {
+            color: rgb(249,249,249);
+            font-size: 13px;
+            letter-spacing: 1.42px;
+            line-height: 1.08;
+            padding: 2px 3px;
+            white-space: nowrap;
+            position: relative;
+
+            &:before {
+                background-color: rgb(249,249,249);
+                border-radius: 0px 0px 4px 4px;
+                bottom: -6px;
+                content: "";
+                left: 0px;
+                height: 2px;
+                opacity: 0;
+                position: absolute;
+                right: 0px;
+                transform-origin: left center;
+                transform: scaleX(0);
+                transition: all 250ms cubic-bezier(0.25,0.46,0.45,0.94);
+                visibility: hidden;
+                width: auto;
+            }
         }
 
-
-    }
-
-    &:hover {
-        span:before{
-            transform: scaleX(1);
-            visiblity: visible;
-            opacity: 1 !important;
-
+        &:hover {
+            span:before {
+                transform: scaleX(1);
+                visibility: visible;
+                opacity: 1 !important;
+            }
         }
     }
-    }
 
-  
-
-    @media(max-width: 768px){
+    @media (max-width: 768px) {
         display: none;
     }
-
-    
 `;
 
 const Login = styled.a`
@@ -221,9 +205,8 @@ const Login = styled.a`
 `;
 
 const UserImage = styled.img`
-    height : 100%;
+    height: 100%;
     border-radius: 50%;
-
 `;
 
 const DropDown = styled.div`
@@ -239,9 +222,6 @@ const DropDown = styled.div`
     letter-spacing: 3px;
     width: 100px;
     opacity: 0;
-
-    
-
 `;
 
 const SignOut = styled.div`
@@ -262,12 +242,9 @@ const SignOut = styled.div`
     &:hover {
         ${DropDown} {
             opacity: 1;
-            transition-suration: 1s;
+            transition-duration: 1s;
         }
     }
-
-
 `;
-
 
 export default Header;
