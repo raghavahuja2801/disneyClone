@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/disneyclone/static/css/main.b61fa609.chunk.css",
+    "main.js": "/disneyclone/static/js/main.a78c561d.chunk.js",
+    "main.js.map": "/disneyclone/static/js/main.a78c561d.chunk.js.map",
+    "runtime-main.js": "/disneyclone/static/js/runtime-main.ffc6660e.js",
+    "runtime-main.js.map": "/disneyclone/static/js/runtime-main.ffc6660e.js.map",
+    "static/css/2.b8740eda.chunk.css": "/disneyclone/static/css/2.b8740eda.chunk.css",
+    "static/js/2.087733ff.chunk.js": "/disneyclone/static/js/2.087733ff.chunk.js",
+    "static/js/2.087733ff.chunk.js.map": "/disneyclone/static/js/2.087733ff.chunk.js.map",
+    "index.html": "/disneyclone/index.html",
+    "static/css/2.b8740eda.chunk.css.map": "/disneyclone/static/css/2.b8740eda.chunk.css.map",
+    "static/css/main.b61fa609.chunk.css.map": "/disneyclone/static/css/main.b61fa609.chunk.css.map",
+    "static/js/2.087733ff.chunk.js.LICENSE.txt": "/disneyclone/static/js/2.087733ff.chunk.js.LICENSE.txt",
+    "static/media/slick-theme.css": "/disneyclone/static/media/slick.c94f7671.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ffc6660e.js",
+    "static/css/2.b8740eda.chunk.css",
+    "static/js/2.087733ff.chunk.js",
+    "static/css/main.b61fa609.chunk.css",
+    "static/js/main.a78c561d.chunk.js"
+  ]
+}
