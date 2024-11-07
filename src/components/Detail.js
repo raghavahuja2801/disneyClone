@@ -36,11 +36,11 @@ const Detail = (props) => {
            <ContentMeta>
            <Controls>
           <Player>
-            <img src="/images/play-icon-black.png" alt="" />
+            <img src ={`${process.env.PUBLIC_URL}/play-icon-black.png`}  alt="" />
             <span>Play</span>
           </Player>
           <Trailer>
-            <img src="/images/play-icon-white.png" alt="" />
+            <img src ={`${process.env.PUBLIC_URL}/play-icon-white.png`}  alt="" />
             <span>Trailer</span>
           </Trailer>
           <AddList>

@@ -12,7 +12,6 @@ import { selectRecommend, setMovies } from '../features/movie/movieSlice';
 import {selectUserName} from '../features/user/userSlice';
 import { useEffect } from "react";
 import { collection , doc, onSnapshot } from '@firebase/firestore';
-import { useHistory } from 'react-router';
 
 
 
